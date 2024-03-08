@@ -1,0 +1,44 @@
+# Initialize Repository
+git init
+
+# Create branches
+git checkout -b develop
+git checkout -b release/v1.0.0
+git checkout -b feature/new-feature
+
+# Work on the feature branch and commit changes
+git add .
+git commit -m "Implemented new feature"
+
+# Merge feature branch into develop branch
+git checkout develop
+git merge --no-ff feature/new-feature
+
+# Work on the release branch, perform final testing, and bug fixing
+git checkout release/v1.0.0
+# Test and fix bugs
+git add .
+git commit -m "Fixed bugs for release"
+git tag -a v1.0.0 -m "Version 1.0.0"
+
+# Merge release branch into master and develop branches
+git checkout master
+git merge --no-ff release/v1.0.0
+git checkout develop
+git merge --no-ff release/v1.0.0
+
+# If needed, create hotfix branch from master
+git checkout -b hotfix/bug-fix master
+# Fix critical bug
+git add .
+git commit -m "Fixed critical bug"
+git tag -a v1.0.1 -m "Version 1.0.1"
+# Merge hotfix branch into master and develop branches
+git checkout master
+git merge --no-ff hotfix/bug-fix
+git checkout develop
+git merge --no-ff hotfix/bug-fix
+
+# Push changes to remote repository
+git push origin master
+git push origin develop
